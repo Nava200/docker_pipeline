@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Replace with your Jenkins credentials ID
-        DOCKER_IMAGE_NAME = 'your-dockerhub-username/your-image-name'
+        DOCKER_IMAGE_NAME = 'priya938/tomcat_miniproject:tagname'
     }
     stages {
         stage('Checkout Code') {
