@@ -7,7 +7,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Replace with your Jenkins credentials ID
         DOCKER_IMAGE_NAME = 'navaneetha084/tomcat'
-        GOOGLE_CHAT_WEBHOOK = 'YOUR_GOOGLE_CHAT_WEBHOOK_URL' // Replace with your Google Chat webhook URL
+        GOOGLE_CHAT_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL' // Replace with your Google Apps Script URL
     }
     stages {
         stage('Checkout Code') {
@@ -60,11 +60,11 @@ pipeline {
 }
 
 def sendGoogleChatNotification(String message) {
-    def webhookURL = "https://chat.google.com/room/AAAAk0a6ZHQ?cls=7"
+    def scriptURL = "${GOOGLE_CHAT_SCRIPT_URL}"  // Use the Google Apps Script URL
 
     sh """
     curl -X POST -H 'Content-Type: application/json' \
     -d '{"text": "${message}"}' \
-    ${webhookURL}
+    ${scriptURL}
     """
 }
