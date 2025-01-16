@@ -52,7 +52,7 @@ pipeline {
             emailext (
                 subject: "Build Success: Docker image pushed successfully",
                 body: "Build succeeded! 🎉 Docker image navaneetha084/tomcat:20 pushed successfully.",
-                to: 'https://groups.google.com/g/jenkins_pipeline_notification'  // Replace with your Google Group email
+                to: 'jenkins_pipeline_notification@googlegroups.com'  // Replace with your Google Group email
             )
         }
     }
@@ -62,7 +62,7 @@ pipeline {
             emailext (
                 subject: "Build Failed: Docker image push failed",
                 body: "Build failed! 🚨 Docker image navaneetha084/tomcat:20 push failed.",
-                to: 'https://groups.google.com/g/jenkins_pipeline_notification'  // Replace with your Google Group email
+                to: 'jenkins_pipeline_notification@googlegroups.com'  // Replace with your Google Group email
             )
         }
     }
