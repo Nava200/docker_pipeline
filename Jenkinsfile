@@ -7,6 +7,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Replace with your Jenkins credentials ID
         DOCKER_IMAGE_NAME = 'navaneetha084/tomcat'
+        GOOGLE_CHAT_WEBHOOK = 'YOUR_GOOGLE_CHAT_WEBHOOK_URL' // Replace with your Google Chat webhook URL
     }
     stages {
         stage('Checkout Code') {
@@ -46,10 +47,23 @@ pipeline {
     }
     post {
         success {
-            echo "Docker image pushed successfully!"
+            script {
+                sendGoogleChatNotification("Build succeeded! 🎉 Docker image ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} pushed successfully.")
+            }
         }
         failure {
-            echo "Build failed!"
+            script {
+                sendGoogleChatNotification("Build failed! ❌ Please check the Jenkins logs for details.")
+            }
         }
     }
+}
+
+def sendGoogleChatNotification(String message) {
+    def webhookURL = env.https://chat.google.com/room/AAAAk0a6ZHQ?cls=7
+    sh """
+    curl -X POST -H 'Content-Type: application/json' \
+    -d '{"text": "${message}"}' \
+    ${webhookURL}
+    """
 }
