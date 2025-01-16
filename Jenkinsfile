@@ -60,7 +60,7 @@ pipeline {
 }
 
 def sendGoogleChatNotification(String message) {
-    def scriptURL = https://groups.google.com/g/jenkins_pipeline_notification // Use the Google Apps Script URL
+    def scriptURL = "https://groups.google.com/g/jenkins_pipeline_notification"  // Use the Google Apps Script URL
 
     sh """
     curl -X POST -H 'Content-Type: application/json' \
