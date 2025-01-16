@@ -46,25 +46,28 @@ pipeline {
         }
     }
     post {
-        success {
-            script {
-                sendGoogleChatNotification("Build succeeded! 🎉 Docker image ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} pushed successfully.")
-            }
+    success {
+        script {
+            // Sending a notification to a Google Group email
+            emailext (
+                subject: "Build Success: Docker image pushed successfully",
+                body: "Build succeeded! 🎉 Docker image navaneetha084/tomcat:20 pushed successfully.",
+                to: 'https://groups.google.com/g/jenkins_pipeline_notification'  // Replace with your Google Group email
+            )
         }
-        failure {
-            script {
-                sendGoogleChatNotification("Build failed! ❌ Please check the Jenkins logs for details.")
-            }
+    }
+    failure {
+        script {
+            // Optionally send a failure notification
+            emailext (
+                subject: "Build Failed: Docker image push failed",
+                body: "Build failed! 🚨 Docker image navaneetha084/tomcat:20 push failed.",
+                to: 'https://groups.google.com/g/jenkins_pipeline_notification'  // Replace with your Google Group email
+            )
         }
     }
 }
 
-def sendGoogleChatNotification(String message) {
-    def scriptURL = "https://groups.google.com/g/jenkins_pipeline_notification"  // Use the Google Apps Script URL
+        }
+    
 
-    sh """
-    curl -X POST -H 'Content-Type: application/json' \
-    -d '{"text": "${message}"}' \
-    ${scriptURL}
-    """
-}
