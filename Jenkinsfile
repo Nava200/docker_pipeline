@@ -60,7 +60,8 @@ pipeline {
 }
 
 def sendGoogleChatNotification(String message) {
-    def webhookURL = env.https://chat.google.com/room/AAAAk0a6ZHQ?cls=7
+    def webhookURL = "https://chat.google.com/room/AAAAk0a6ZHQ?cls=7"
+
     sh """
     curl -X POST -H 'Content-Type: application/json' \
     -d '{"text": "${message}"}' \
