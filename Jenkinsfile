@@ -46,28 +46,42 @@ pipeline {
         }
     }
     post {
-    success {
-        script {
-            // Sending a notification to a Google Group email
-            emailext (
-                subject: "Build Success: Docker image pushed successfully",
-                body: "Build succeeded! 🎉 Docker image navaneetha084/tomcat:20 pushed successfully.",
-                to: 'jenkins_pipeline_notification@googlegroups.com'  // Replace with your Google Group email
-            )
+        success {
+            script {
+                // Sending a success notification email
+                emailext(
+                    subject: "Build Success: Docker image pushed successfully",
+                    body: """
+                    Build succeeded! 🎉
+
+                    Docker image: ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} has been pushed successfully.
+
+                    Best regards,
+                    Jenkins CI/CD
+                    """,
+                    to: 'nava.priya2000@gmail.com'  // Replace with your email address
+                )
+            }
         }
-    }
-    failure {
-        script {
-            // Optionally send a failure notification
-            emailext (
-                subject: "Build Failed: Docker image push failed",
-                body: "Build failed! 🚨 Docker image navaneetha084/tomcat:20 push failed.",
-                to: 'jenkins_pipeline_notification@googlegroups.com'  // Replace with your Google Group email
-            )
+
+        failure {
+            script {
+                // Sending a failure notification email
+                emailext(
+                    subject: "Build Failed: Docker image push failed",
+                    body: """
+                    Build failed! 🚨
+
+                    Docker image: ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} push failed.
+
+                    Please check the Jenkins job logs for more details.
+
+                    Best regards,
+                    Jenkins CI/CD
+                    """,
+                    to: 'nava.priya2000@gmail.com'  // Replace with your email address
+                )
+            }
         }
     }
 }
-
-        }
-    
-
