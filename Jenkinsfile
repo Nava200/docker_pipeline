@@ -7,7 +7,6 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-creds') // Replace with your Jenkins credentials ID
         DOCKER_IMAGE_NAME = 'navaneetha084/tomcat'
-        GOOGLE_CHAT_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL' // Replace with your Google Apps Script URL
     }
     stages {
         stage('Checkout Code') {
@@ -47,41 +46,13 @@ pipeline {
     }
     post {
         success {
-            script {
-                // Sending a success notification email
-                emailext(
-                    subject: "Build Success: Docker image pushed successfully",
-                    body: """
-                    Build succeeded! 🎉
-
-                    Docker image: ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} has been pushed successfully.
-
-                    Best regards,
-                    Jenkins CI/CD
-                    """,
-                    to: 'nava.priya2000@gmail.com'  // Replace with your email address
-                )
-            }
+            echo "Docker image pushed successfully!"
         }
-
         failure {
-            script {
-                // Sending a failure notification email
-                emailext(
-                    subject: "Build Failed: Docker image push failed",
-                    body: """
-                    Build failed! 🚨
-
-                    Docker image: ${DOCKER_IMAGE_NAME}:${BUILD_NUMBER} push failed.
-
-                    Please check the Jenkins job logs for more details.
-
-                    Best regards,
-                    Jenkins CI/CD
-                    """,
-                    to: 'nava.priya2000@gmail.com'  // Replace with your email address
-                )
-            }
+            echo "Build failed!"
         }
     }
 }
+
+
+
